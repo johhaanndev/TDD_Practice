@@ -1,4 +1,5 @@
-﻿using UnityEngine.UI;
+﻿using System;
+using UnityEngine.UI;
 
 namespace Game.Tests.UnitTests
 {
@@ -15,6 +16,11 @@ namespace Game.Tests.UnitTests
         public void Replenish(int numberOfHeartPieces)
         {
             _image.fillAmount += numberOfHeartPieces * FillPerHeartPiece;
+        }
+
+        internal void Deplete(int numberOfHeartPieces)
+        {
+            _image.fillAmount -= numberOfHeartPieces * FillPerHeartPiece;
         }
     }
 

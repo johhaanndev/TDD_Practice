@@ -58,6 +58,37 @@ namespace Game.Tests.UnitTests
 
         public class DepleteMethod
         {
+            private Image _image;
+            private Heart _heart;
+
+            [SetUp]
+            public void BeforeEveryTest()
+            {
+                _image = new GameObject().AddComponent<Image>();
+                _heart = new Heart(_image);
+            }
+
+            [Test]
+            public void WhenDeplete0Pieces_IfHeartIsFilled100Percent_ThenImageAmountIs1Percent()
+            {
+                _image.fillAmount = 1f;
+                _heart = new Heart(_image);
+
+                _heart.Deplete(0);
+
+                Assert.AreEqual(1, _image.fillAmount);
+            }
+
+            [Test]
+            public void WhenDeplete1Piece_IfHeartIsFilled100Percent_ThenImageAmountIs75Percent()
+            {
+                _image.fillAmount = 1f;
+                _heart = new Heart(_image);
+
+                _heart.Deplete(1);
+
+                Assert.AreEqual(0.75f, _image.fillAmount);
+            }
         }
     }
 
