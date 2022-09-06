@@ -10,19 +10,18 @@ namespace Game.Tests.UnitTests
 {
     public class HealthTests
     {
-        public class ReplenishMethod
+        private Image _image;
+        private Heart _heart;
+
+        [SetUp]
+        public void BeforeEveryTest()
         {
+            _image = new GameObject().AddComponent<Image>();
+            _heart = new Heart(_image);
+        }
 
-            private Image _image;
-            private Heart _heart;
-
-            [SetUp]
-            public void BeforeEveryTest()
-            {
-                _image = new GameObject().AddComponent<Image>();
-                _heart = new Heart(_image);
-            }
-
+        public class ReplenishMethod : HealthTests
+        {
             [Test]
             public void WhenReplenishHeartWith0Pieces_IfHeartIsEmpty_ImageIsFilledWith0PercentAmount()
             {
@@ -54,20 +53,16 @@ namespace Game.Tests.UnitTests
 
                 Assert.AreEqual(0.5f, _image.fillAmount);
             }
+
+            [Test]
+            public void WhenReplenishNegativePieces_ThenReturnsException()
+            {
+                Assert.Throws<ArgumentOutOfRangeException>(() => _heart.Replenish(-1));
+            }
         }
 
-        public class DepleteMethod
+        public class DepleteMethod : HealthTests
         {
-            private Image _image;
-            private Heart _heart;
-
-            [SetUp]
-            public void BeforeEveryTest()
-            {
-                _image = new GameObject().AddComponent<Image>();
-                _heart = new Heart(_image);
-            }
-
             [Test]
             public void WhenDeplete0Pieces_IfHeartIsFilled100Percent_ThenImageAmountIs1Percent()
             {
@@ -88,6 +83,23 @@ namespace Game.Tests.UnitTests
                 _heart.Deplete(1);
 
                 Assert.AreEqual(0.75f, _image.fillAmount);
+            }
+
+            [Test]
+            public void WhenDeplete2Pieces_IfHeartIsFilled75Percent_ThenImageAmountIs25Percent()
+            {
+                _image.fillAmount = 0.75f;
+                _heart = new Heart(_image);
+
+                _heart.Deplete(2);
+
+                Assert.AreEqual(0.25f, _image.fillAmount);
+            }
+
+            [Test]
+            public void WhenDepletesNegativePieces_ThenReturnsException()
+            {
+                Assert.Throws<ArgumentOutOfRangeException>(() => _heart.Deplete(-1));
             }
         }
     }

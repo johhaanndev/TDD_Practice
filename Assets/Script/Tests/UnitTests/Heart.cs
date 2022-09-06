@@ -15,11 +15,17 @@ namespace Game.Tests.UnitTests
 
         public void Replenish(int numberOfHeartPieces)
         {
+            if (numberOfHeartPieces < 0)
+                throw new ArgumentOutOfRangeException("Number of heart pieces must be positive", "numberOfHeartPieces");
+
             _image.fillAmount += numberOfHeartPieces * FillPerHeartPiece;
         }
 
         internal void Deplete(int numberOfHeartPieces)
         {
+            if (numberOfHeartPieces < 0)
+                throw new ArgumentOutOfRangeException("Number of heart pieces must be positive", "numberOfHeartPieces");
+
             _image.fillAmount -= numberOfHeartPieces * FillPerHeartPiece;
         }
     }
