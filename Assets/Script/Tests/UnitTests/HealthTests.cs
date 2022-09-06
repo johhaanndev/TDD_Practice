@@ -11,40 +11,46 @@ namespace Game.Tests.UnitTests
 
     public class HealthTests
     {
+        private Image _image;
+        private Heart _heart;
+
+        [SetUp]
+        public void BeforeEveryTest()
+        {
+            _image = new GameObject().AddComponent<Image>();
+            _heart = new Heart(_image);
+        }
+
         [Test]
         public void WhenReplenishHeartWith0Pieces_IfHeartIsEmpty_ImageIsFilledWith0PercentAmount()
         {
-            var image = new GameObject().AddComponent<Image>();
-            image.fillAmount = 0;
-            var heart = new Heart(image);
+            _image.fillAmount = 0;
 
-            heart.Replenish(0);
+            _heart.Replenish(0);
 
-            Assert.AreEqual(0, image.fillAmount);
+            Assert.AreEqual(0, _image.fillAmount);
         }
 
         [Test]
         public void WhenReplenishHeartWith1Piece_IfHeartIsEmpty_ImageIsFilledWith25PercentAmount()
         {
-            var image = new GameObject().AddComponent<Image>();
-            image.fillAmount = 0;
-            var heart = new Heart(image);
+            _image.fillAmount = 0;
+            _heart = new Heart(_image);
 
-            heart.Replenish(1);
+            _heart.Replenish(1);
 
-            Assert.AreEqual(0.25f, image.fillAmount);
+            Assert.AreEqual(0.25f, _image.fillAmount);
         }
 
         [Test]
         public void WhenReplenishHeartWith1Piece_IfHeartIsAlready25PercentFilled_ImageIsFilledWith50PercentAmount()
         {
-            var image = new GameObject().AddComponent<Image>();
-            image.fillAmount = 0.25f;
-            var heart = new Heart(image);
+            _image.fillAmount = 0.25f;
+            _heart = new Heart(_image);
 
-            heart.Replenish(1);
+            _heart.Replenish(1);
 
-            Assert.AreEqual(0.5f, image.fillAmount);
+            Assert.AreEqual(0.5f, _image.fillAmount);
         }
     }
 
